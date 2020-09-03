@@ -1,0 +1,152 @@
+﻿:root{
+            --bg_color: #dfe6e9;
+            --text_color: #333;
+            --text_color2: #4682B4;/*修改处*/
+        }
+        nav.navbar.bootsnav{
+            font-family: 'Roboto Slab', serif;
+            margin-bottom: 150px;
+            border: none;
+        }
+        nav.navbar.bootsnav ul.nav>li{ margin-right: 20px; }
+        nav.navbar.bootsnav ul.nav > li > a{
+            color: var(--text_color);
+            background-color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 5px;
+            border-radius: 10px;
+            position: relative;
+            z-index: 1;
+            transition: all .5s ease;
+        }
+        nav.navbar.bootsnav ul.nav > li.dropdown > a{ padding: 5px 18px 5px 5px; }
+        nav.navbar.bootsnav ul.nav > li.active > a,
+        nav.navbar.bootsnav ul.nav > li.active > a:hover,
+        nav.navbar.bootsnav ul.nav > li > a:hover,
+        nav.navbar.bootsnav ul.nav > li.on > a{
+            color: var(--text_color2);
+            background: transparent !important;
+            border: none;
+        }
+        nav.navbar.bootsnav ul.nav > li > a>span:before,
+        nav.navbar.bootsnav ul.nav > li > a>span:after{
+            content: "\f0d7";
+            background: var(--text_color2);/*无关*/
+            height: 3px;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(-50%) scaleX(0);
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            z-index: -1;
+            transition: all 0.2s ease;
+        }
+        nav.navbar.bootsnav ul.nav > li > a>span:after{
+            background-color: #fff;
+            height: 10px;
+            width: 10px;
+            border: 3px solid var(--text_color2);
+            border-top: none;
+            border-left: none;
+            opacity: 0;
+            transform: translateX(-50%) scaleX(1) rotate(45deg);
+            bottom: 0;
+        }
+        nav.navbar.bootsnav ul.nav>li.active>a>span:before,
+        nav.navbar.bootsnav ul.nav>li>a:hover>span:before,
+        nav.navbar.bootsnav ul.nav>li.on>a>span:before{
+            opacity: 1;
+            transform: translateX(-50%) scaleX(1);
+        }
+        nav.navbar.bootsnav ul.nav>li.active>a>span:after,
+        nav.navbar.bootsnav ul.nav>li>a:hover>span:after,
+        nav.navbar.bootsnav ul.nav>li.on>a>span:after{
+            opacity: 1;
+            bottom: -2px;
+        }
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu.megamenu-content li a:hover,
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu li a:hover,
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu li a.dropdown-toggle:active,
+        nav.navbar ul.nav li.dropdown.on ul.dropdown-menu li.dropdown.on > a{
+            color: #fff !important;/*修改处*/
+            background-color: #4682B4 !important;/*修改处*/
+        }
+        nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after{
+            color: #fff;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            margin: 0 0 0 7px;
+        }
+        nav.navbar.bootsnav ul.nav > li.dropdown > ul{
+            opacity: 0;
+            visibility: hidden;
+            transform: perspective(600px) scaleY(0);
+            transform-origin: top center;
+            transition: all 0.5s ease-in-out 0s;
+        }
+        nav.navbar.bootsnav ul.nav > li.dropdown.on > ul{
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: perspective(600px) scale(1);
+        }
+        .dropdown-menu.multi-dropdown{
+            position: absolute;
+            left: -100% !important;
+        }
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
+            background-color: #fff;/*修改处*/
+            border: none;
+            border-radius: 0;
+            top: 124%;
+        }
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu > li > a{ color: var(--text_color2); }/*修改处*/
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu.megamenu-content{ top: 100%; }
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu.megamenu-content li{ font-size: 14px; }
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu.megamenu-content .menu-col li a{
+            color: #fff;/*无关*/
+            padding-left: 10px;
+        }
+        nav.navbar.bootsnav li.dropdown ul.dropdown-menu.megamenu-content .title{
+            color: #fff;/*无关*/
+            font-size: 16px;
+            font-weight: bold;
+        }
+        @media only screen and (max-width:990px){
+            .dropdown-menu.multi-dropdown{ left: 0 !important; }
+            nav.navbar.bootsnav .navbar-toggle{
+                color: var(--text_color2);
+                background: transparent !important;
+            }
+            nav.navbar.bootsnav ul.nav>li{ margin: 5px auto 15px; }
+            nav.navbar.bootsnav.navbar-mobile ul.nav>li>a{
+                background-color: transparent;
+                text-align: center;
+                padding: 10px 15px;
+                border: none;
+            }
+            nav.navbar.bootsnav ul.nav>li.dropdown>a{ padding: 10px 10px 10px 17px; }
+            nav.navbar.bootsnav ul.nav>li.dropdown>a.dropdown-toggle:before{ color: var(--text_color); }
+            nav.navbar.bootsnav ul.nav li.dropdown ul.dropdown-menu>li>a{
+                color: var(--text_color);
+                padding-left: 10px;
+                border-bottom-color: none;
+            }
+            nav.navbar.bootsnav .dropdown-menu{ z-index: 0; }
+            nav.navbar.bootsnav li.dropdown ul.dropdown-menu.megamenu-content .title{
+                font-size: 14px;
+                font-weight: normal;
+                color: var(--text_color);
+            }
+            nav.navbar.bootsnav li.dropdown ul.dropdown-menu.megamenu-content .col-menu li a{
+               color: var(--text_color);
+           }
+        }
+
+
+         nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
+        width: 100px;
+    }

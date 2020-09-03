@@ -1,0 +1,1390 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Carter+One);
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-family: 'Open Sans', 'Calibri';
+    overflow: auto;
+}
+
+body {
+    color: black;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none !important;
+}
+
+h1.title {
+    font-size: 32px;
+    margin-bottom: 2em;
+}
+
+h1 {
+    font-family: 'Open Sans', 'Calibri' !important;
+}
+
+h2 {
+    font-family: 'Open Sans', 'Calibri' !important;
+    margin-top: 20px;
+}
+
+h3 {
+    font-family: 'Open Sans', 'Calibri' !important;
+    margin-top: 20px;
+}
+
+label {
+    font-family: 'Open Sans', 'Calibri' !important;
+    color: Black;
+    font-weight: normal !important;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+html[xmlns] .clearfix {
+    display: block;
+}
+
+* html .clearfix {
+    height: 1%;
+}
+
+a.btn {
+    background-color: buttonface;
+    color: #333;
+}
+.vertically-aligned {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.disable-transitions {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+}
+
+/*TODO: consolidate the .active classes to mainly use/remove redundant code*/
+
+.active {
+    display: block !important;
+}
+
+.no-display {
+    display: none;
+}
+
+.page-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.side-bar {
+    float: left;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(4, 53, 101);
+    z-index: 10;
+    overflow: auto;
+}
+
+.side-item-box {
+    display: block;
+    width: 90%;
+    margin: 1em auto;
+}
+
+.side-item {
+    display: block;
+    /*margin: 1em auto;*/
+    width: 100%;
+    height: 50px;
+    /*background-color: black;*/
+}
+
+.side-item.title,
+.side-item.upload-button,
+.side-item.description {
+    /*background-color: white;*/
+}
+
+.side-item.graph {
+    height: 500px;
+    margin-bottom: 20px;
+}
+
+.move-button {
+    width: 15%;
+    margin-left: 90%;
+}
+
+#map-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#select-area-wrap {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    bottom: 85px;
+    left: 10%;
+    border-radius: 0 !important;
+}
+
+#area-attributes-div {
+    position: fixed;
+    bottom: 0%;
+    right: 0%;
+    height: 310px;
+    width: 300px;
+    background-color: white !important;
+    opacity: 0.8;
+}
+
+#area-attributes-div-minimize-button {
+    opacity: 1.0 !important;
+}
+
+#topography-wrap {
+    position: absolute;
+    top: 10%;
+    left: 0%;
+    height: 70%;
+    width: 40%;
+}
+
+.wrap#area-attributes-div .top-right-buttons {
+    top: 0px;
+}
+
+#close-sidebar-button {
+    border: none;
+    color: red;
+    font-size: 30px;
+}
+
+.top-right-buttons {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    z-index: 3;
+}
+
+#graph-div-button {
+    border: none;
+    color: red;
+    font-size: 30px;
+}
+
+.wrap {
+    overflow: hidden;
+    /*padding: 20px 50px;*/
+    display: block;
+    border-radius: 4px;
+    transform: translateY(20px);
+    transition: all 0.5s;
+    visibility: hidden;
+    background-color: white;
+}
+
+.wrap .content {
+    opacity: 0;
+    margin: 0px !important;
+    background-color: white !important;
+    width: 100%;
+    height: 100%;
+    padding: 0px 20px 0px 20px;
+}
+
+.wrap:before {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: white;
+    content: "";
+    bottom: 10px;
+    left: 50%;
+    top: 95%;
+    color: #fff;
+    border-radius: 50%;
+    -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.wrap.active {
+    display: block;
+    visibility: visible;
+    box-shadow: 2px 3px 16px silver;
+    transition: all 600ms;
+    transform: translateY(0px);
+    transition: all 0.5s;
+    z-index: 99;
+}
+
+.wrap.active:before {
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    margin-left: -1000px;
+    margin-top: -1000px;
+    display: block;
+    -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.wrap.active .content {
+    position: relative;
+    z-index: 2;
+    opacity: 1;
+    transition: all 600ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    overflow: auto;
+}
+
+.wrap.active.toggled .content {
+    display: none;
+}
+
+#USGSEvents-options-wrapper {
+    position: absolute;
+    width: 300px;
+    height: 600px;
+    max-width: 350px;
+    max-height: 850px;
+    margin: 0 auto;
+    top: 29px;
+    left: 640px;
+    background: rgba(0, 0, 0, 0);
+    border: none !important;
+    box-shadow: none !important;
+}
+
+#USGSEvents-options {
+    position: relative;
+    min-width: 50px;
+    width: 50%;
+    height: 80%;
+    max-height: 450px;
+}
+
+#USGSEvents-options .content {
+    padding-top: 20px;
+}
+
+#popupButton {
+    outline: none;
+    font-size: 12px;
+    transition: transform 0.25s;
+}
+
+#popupButton:hover {
+    text-decoration: none;
+    background: #2198ff;
+}
+
+#popupButton.active {
+    transform: rotate(135deg);
+    transition: transform 0.5s;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+#input {
+    color: coral;
+    font-family: 'Open Sans', cursive;
+}
+
+button {
+    font-family: 'Open Sans', 'Calibri'
+}
+
+div.menu {
+    margin-top: 2em;
+}
+
+#search-bar {
+    z-index: 99;
+}
+
+#search-bar .input-group {
+    max-width: 240px;
+}
+
+#top-map-buttons {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 99;
+    max-width: 80%;
+}
+
+#top-map-buttons > * {
+    /*margin-left: 10px;
+    border-radius: 5px;*/
+    float: left;
+    z-index: 99;
+}
+
+#top-map-buttons > .btn {
+    background-color: #b894e0;
+}
+
+#top-map-buttons a {
+    color: black;
+}
+
+#map-type-menu {
+    background: #fff;
+    font-family: 'Open Sans', sans-serif;
+    width: 230px;
+    min-height: 34px;
+}
+#file-type-menu{
+     background: #fff;
+    font-family: 'Open Sans', sans-serif;
+    width: 200px;
+    min-height: 34px;
+}
+
+#hide-show-seismicities-button, #hide-show-insar-button {
+    opacity: 0.7
+}
+
+#overlay-slider {
+    height: 10px;
+    width: 50px;
+    bottom: 0px;
+    background: coral;
+}
+
+.overlay-div {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+
+.overlay-div.active {
+    display: block;
+}
+
+#information-div {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#information-div-contents {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto 0 auto;
+}
+
+#loading-screen {
+    background-color: rgba(0, 0, 0, 0.0);
+    color: black;
+    font-size: 15px;
+}
+
+#loading-screen-contents {
+    height: 25%;
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.loading-text-div {
+    height: 20%;
+    max-width: 350px;
+    text-align: center;
+}
+
+#loading-circle-container {
+    position: relative;
+    width: 100%;
+    height: 60%;
+}
+
+.loading-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px auto auto -20px;
+    border: 5px solid #f3f3f3;
+    /* Light grey */
+    border-top: 5px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+    -webkit-animation: spin 1.5s linear infinite;
+    -ms-animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.logos {
+    margin: 2em;
+}
+
+.logo2 {
+    margin-left: 4em;
+}
+
+.funding {
+    color: white;
+    margin-left: 2em;
+}
+
+.overlay_toggle {
+    float: left;
+    display: inline-block;
+    width: 100%;
+}
+
+#map-options .overlay_toggle {
+    width: 25%;
+}
+
+.mapboxgl-ctrl-logo {
+    display: none !important;
+}
+
+.boxdraw {
+    background: rgba(56, 135, 190, 0.1);
+    border: 2px solid #3887be;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+}
+
+#polygon-button-div {
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+#file-layer-button-div{
+    min-width: 60px;
+}
+
+
+#select-layer-button {
+    padding: 0 !important;
+}
+
+#select-layer-button-div {
+    min-width: 60px;
+}
+
+#select-layer-button-div:hover > #overlay-options-container {
+    display: block;
+}
+
+#overlay-options-wrapper {
+    height: 34px;
+}
+
+#overlay-options-container {
+    width: 100%;
+    background: white;
+    display: none;
+}
+
+#file-options-container{
+    width: 100%;
+    background: white;
+    display: none;
+}
+
+#overlay-options-container.active {
+    display: block;
+}
+
+#overlay-options-container .overlay_toggle {
+    width: 100%;
+}
+
+.overlay-toggle {
+    height: 25px;
+}
+
+.overlay-toggle > * {
+    float: left;
+}
+
+.circular-question-mark {
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    background-color: cyan;
+    border-radius: 50%;
+    font-size: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* change jquery tooltip of toggle buttons to white on black */
+/* also, disable max-width to allow for long links in descriptions */
+.black-on-white-tooltip + .tooltip > .tooltip-inner {
+    max-width: 300px;
+    background-color: white;
+    color: black;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+#overlay-options {
+    font-family: 'Open Sans', sans-serif;
+    z-index: 99;
+    border-radius: 4px;
+    background-color: white;
+    height: 100%;
+}
+
+#magnitude-and-arrow-scale-container {
+    position: absolute;
+    top: 30%;
+    z-index: 98;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.custom-scale {
+    display: none;
+}
+
+.magnitude-scale-circle, .magnitude-scale-value {
+    margin: 0 auto;
+}
+
+.magnitude-scale-circle {
+    border-radius: 100%;
+    border: 1px solid #000000;
+}
+
+#magnitude-scale:hover {
+    cursor: pointer;
+}
+
+#magnitude-scale > div {
+    float: left;
+}
+
+#magnitude-scale ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#magnitude-scale ul > li {
+    display: block;
+    height: 20px;
+}
+
+#insar-seismicity-color-scales-container {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 98;
+    text-align: center;
+    height: 45%;
+    max-height: 415px;
+}
+
+.minimap-color-scale {
+    height: 100%;
+    float: left;
+}
+
+.minimap-color-scale > .color-scale-text-div {
+    font-size: 15px;
+}
+
+#lat-vs-long-time-color-scale > .color-scale-text-div, #cross-section-time-color-scale > .color-scale-text-div {
+    padding-left: 35px;
+}
+
+#lat-vs-long-depth-color-scale > .color-scale-text-div, #cross-section-depth-color-scale > .color-scale-text-div {
+    width: 100%;
+    text-align: right;
+}
+
+#lat-vs-long-depth-color-scale, #cross-section-depth-color-scale {
+    width: 40%;
+}
+
+#lat-vs-long-time-color-scale, #cross-section-time-color-scale {
+    width: 60%;
+}
+
+.color-scale {
+    display: none;
+}
+
+.color-scale.active {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 100%;
+    float: left;
+}
+
+.color-scale-text-div {
+    height: 11%;
+}
+
+.color-scale .color-scale-text-div {
+    cursor: pointer;
+    background-color: white !important;
+    color: black !important;
+    border: none;
+}
+
+.color-scale-main-container {
+    height: 90%;
+}
+
+.color-scale-picture-div {
+    position: relative;
+    width: 35px;
+    height: 100%;
+    float: left;
+}
+
+.color-scale-picture-div > img {
+    width: 100%;
+    height: 100%;
+}
+
+.color-scale-picture-div .hidden-colorscale-click-area {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    z-index: 99;
+    cursor: pointer;
+}
+
+#seismicity-color-scale {
+    padding-left: 5px;
+}
+
+.scale-click-area-invisible-top-half {
+    top: 0;
+}
+
+.scale-click-area-invisible-bottom-half {
+    top: 50%;
+}
+
+.color-scale-and-values-container {
+    height: 100%;
+    margin: 0 auto;
+}
+
+.scale-values {
+    position: relative;
+    width: 40px;
+    float: left;
+    height: 100%;
+}
+
+.left-scale-minimum,
+.right-scale-maximum {
+    position: absolute;
+    width: 100%;
+}
+
+.right-scale-maximum {
+    top: 0;
+}
+
+.left-scale-minimum {
+    bottom: -15px;
+}
+
+.scale-values .form-group > input {
+    padding: 0;
+}
+
+#lat-vs-long-depth-color-scale .color-scale-and-values-container, #cross-section-depth-color-scale .color-scale-and-values-container {
+    float: right;
+}
+
+
+/*remove the up/down spinners on the number input*/
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+#slideout-button {
+    position: absolute;
+    font-family: 'Open Sans', sans-serif;
+    z-index: 99;
+    left: 10px;
+    top: 55px;
+    border-radius: 10px;
+}
+
+.map-button {
+    width: 30px;
+    height: 30px;
+    /*display: block;*/
+    padding: 0;
+    outline: none;
+    border: none;
+    /*box-sizing: border-box;*/
+    background-color: white;
+    cursor: pointer;
+}
+
+.highcharts-container {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#charts {
+    position: absolute;
+    left: 0%;
+    bottom: 0%;
+    height: 70%;
+    width: 40%;
+    z-index: 100;
+}
+
+#charts #insar-chart-slider {
+    display: none;
+}
+
+#charts.only-show-slider, #charts.show-seismicity-sliders {
+    height: auto;
+    min-height: 50px;
+}
+
+#charts.show-seismicity-sliders {
+    min-height: 300px;
+}
+
+#charts.active.only-show-slider #insar-chart-slider {
+    display: block !important;
+}
+
+#hide-when-only-show-sliders {
+    height: 100%;
+}
+
+#hide-when-only-show-sliders.show-seismicity-sliders {
+    height: 65%;
+}
+
+#charts.active.only-show-slider #hide-when-only-show-sliders {
+    display: none;
+}
+
+#seismicity-charts {
+    position: absolute;
+    right: 0%;
+    height: 100%;
+    width: 100%;
+    max-width: 768px;
+}
+
+#cross-section-charts {
+    position: absolute;
+    right: 0%;
+    height: 100%;
+    width: 50%;
+}
+
+.seismicity-chart {
+    height: 33%;
+    width: 100%;
+}
+
+#seismicity-chart-sliders, #insar-chart-slider {
+    left: 10%;
+    width: 100%;
+    bottom: 0%;
+}
+
+#insar-chart-slider {
+    width: 75%;
+}
+
+.chart-slider {
+    height: 45px;
+    margin-bottom: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.seismicity-chart {
+    position: relative;
+}
+
+.seismicity-charts-container {
+    height: 100% !important;
+    padding-top: 20px;
+}
+
+.seismicity-chart-set-coloring-button {
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    right: 0;
+    padding: 0 !important;
+}
+
+#cumulative-events-vs-date-container .seismicity-chart-set-coloring-button {
+    position: static;
+}
+
+#cumulative-events-vs-date-chart-buttons-container {
+    position: absolute;
+    top: 0;
+    left: 70px;
+}
+
+#cumulative-events-vs-date-chart-buttons-container > button {
+    float: left;
+    padding: 0 !important;
+    margin-right: 10px;
+}
+
+/* make the chart containers relative by default so we can position
+    buttons absolutely which change their coloring */
+.seismicity-chart > div {
+    position: relative;
+}
+/*we use pos absolute because we reduce size of map and center it vertically
+to get it to exactly match the axes of the lat and long vs depth plots*/
+
+/*we could use flexbox, but I rather not use new fancy features.
+see: https://css-tricks.com/centering-css-complete-guide/*/
+
+/*for now, leave it pos absolute. not sure if he just wanted the axes
+of plots to match up with min and max lat and long of map, or if he physically
+wanted minimap to exactly be aligned with axes of plots (or both?). For now, I think he just wants min and max
+lat and long of plots to match minimap.
+TODO: ask him, as exactly matching physically will take logic, and if he doesnt want it, will be wasted time*/
+
+.seismicity-chart > div.side-by-side {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+}
+
+.seismicity-chart > div.side-by-side:first-child {
+    left: 0;
+}
+
+.seismicity-chart > div.side-by-side:nth-child(2) {
+    right: 0;
+}
+
+.seismicity-chart .chart, .cross-section-chart .chart {
+    height: 100%;
+}
+
+.cross-section-chart {
+    position: relative;
+    width: 100%;
+    height: 33%;
+}
+
+#cumulative-events-vs-date-container div {
+    float: left;
+}
+
+#cumulative-events-vs-date-graph {
+    width: 90%;
+}
+
+#lat-vs-long-graph {
+    height: 80%;
+    width: 80%;
+    float: right;
+}
+
+#graph-div-minimize-button {
+    display: none;
+}
+
+.chart-containers {
+    width: 100%;
+    height: 90%;
+    float: left;
+}
+
+#chartContainer {
+    width: 100%;
+    height: 100%;
+}
+
+#chartContainer2 {
+    display: none;
+    width: 100%;
+    height: 50%;
+}
+
+#graph-select-div {
+    display: none;
+    width: 5%;
+    height: 90%;
+    float: left;
+}
+
+#graph-select-div div {
+    position: relative;
+    height: 50%;
+}
+
+#top-graph-focus-div,
+#bottom-graph-focus-div {
+    position: absolute !important;
+    bottom: 0px;
+}
+
+#select-graph-focus-div {
+    display: none;
+}
+
+#map-options {
+    width: 100%;
+    height: 10%;
+}
+
+#map-options.show-seismicity-sliders {
+    display: none;
+}
+
+#download-as-text-button {
+    border: solid;
+    background-color: white;
+    border-width: 1px;
+}
+
+.hidden {
+    width: 30%;
+    height: 10%;
+    background-color: white;
+}
+
+.hidden * {
+    display: none;
+}
+
+#point-details {
+    position: absolute;
+    z-index: 98;
+    bottom: 0px;
+    left: 0px;
+    background-color: white;
+    opacity: 0.6;
+    width: 280px;
+}
+
+#hidden-search-bars-container {
+    display: none;
+}
+
+#recent-datasets-toggle-button {
+    color: rgb(125, 124, 122);
+    font-size: 15px;
+}
+
+#toggle-other-bars > .caret {
+    position: absolute;
+    display: block;
+    bottom: 50%;
+}
+
+#search-form-and-results-container {
+    width: 35%;
+    max-height: 280px;
+    position: absolute;
+    z-index: 99;
+    bottom: 0;
+    left: 90px;
+    /* don't overlap with colorscale div */
+    background: white;
+}
+
+#search-form {
+    width: 140px;
+    float: left;
+}
+
+#search-form .form-group {
+    margin-bottom: 0 !important;
+    background-color: white;
+}
+
+#search-form .form-group .form-control {
+    width: 70% !important;
+    float: left;
+}
+
+#search-form-results {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+#subset-swath-popup {
+    position: absolute;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 50%;
+    max-width: 560px;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: 99;
+    background-color: white;
+}
+
+#subset-swath-table > thead > tr {
+    background-color: gray;
+    color: white;
+}
+
+#subset-swath-table td {
+    word-break: break-all;
+    border-bottom: 1px solid #eee;
+}
+#subset-swath-table > tbody tr {
+    cursor: pointer;
+}
+#search-form-results-table {
+    font-size: 12px;
+}
+
+#search-form-results-table thead > tr {
+    height: 40px;
+    background-color: gray;
+    color: white;
+}
+
+#search-form-results-table td {
+    position: relative;
+}
+
+#search-form-and-results-minimize-button {
+    position: fixed;
+}
+
+.show-children-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.minimize-button,
+.maximize-button {
+    display: block;
+    padding: 0 !important;
+    border: 0 !important;
+    width: 16px;
+    height: 16px;
+    background-image: url(https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-neptune/resources/images/tools/tool-sprites.png) !important;
+    background-color: grey;
+}
+
+.minimize-button {
+    background-position: 0 -208px;
+}
+
+.maximize-button {
+    background-position: 0 -224px;
+}
+
+.maximize-buttons-container {
+    position: absolute;
+    right: 3%;
+    bottom: 10px;
+    z-index: 98;
+}
+
+#seismicity-maximize-buttons-container, #insar-maximize-buttons-container {
+    display: none;
+}
+
+.maximize-buttons-container > .btn.btn-primary {
+    background-color: white !important;
+    border: none;
+    float: left;
+}
+
+.maximize-button-container {
+    width: 33%;
+    height: 16px;
+    float: left;
+}
+
+.maximize-button-container {
+    width: 16px;
+    height: 16px;
+    background-color: #b8b8b8;
+    display: inline-block;
+    margin: 0 4px 0 4px;
+}
+
+.clickable-button:active {
+    background-color: #dcdee2 !important;
+}
+
+#areas-under-mouse-table {
+    margin: 0 !important;
+}
+
+#areas-under-mouse-table td {
+    display: flex;
+}
+
+.preview-attributes-button {
+    text-align: center;
+    border-width: 1px;
+    color: white;
+}
+
+.mapboxgl-popup {
+    opacity: 0.8;
+    /*width: 170px;*/
+}
+
+
+/*take out popup area name table top line*/
+
+.mapboxgl-popup-content tr td {
+    border-top: none !important;
+}
+
+
+/*area information popup with tabs*/
+
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    position: fixed;
+    width: 87%;
+    height: 45px;
+}
+
+ul.tab li {
+    float: left;
+    width: 25%;
+}
+
+ul.tab li a {
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 12px;
+}
+
+ul.tab li a:hover {
+    background-color: #ddd;
+}
+
+ul.tab li a:focus,
+.tablinks.active {
+    background-color: #ccc;
+}
+
+.tabcontent {
+    /*display: none;*/
+    padding-top: 45px;
+    border-bottom: 1px solid #ccc;
+    border-top: none;
+    font-size: 10px !important;
+}
+
+.tabcontent h3,
+.tabcontent p {
+    font-size: 14px;
+    font-family: "Open Sans" !important;
+    color: black !important;
+}
+
+#information-div-buttom-buttons div {
+    float: left;
+}
+
+/* fixed table headers */
+.table-fixed thead {
+    width: 97%;
+}
+.table-fixed tbody {
+    max-height: 230px;
+    overflow-y: auto;
+    width: 100%;
+}
+.table-fixed td {
+    padding: 0 !important;
+}
+.table-fixed tbody > tr {
+    height: 35px;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+    display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+    float: left;
+    border-bottom-width: 0;
+}
+.col-half-offset {
+    margin-left:4.166666667%
+}
+
+@media handheld,
+screen and (max-width:880px) {
+    #USGSEvents-options {
+        top: 100px;
+        left: 50%;
+    }
+}
+
+
+
+
+
+
+
+
+/*******************************************/
+.custom-input-container {
+    background-color: white;
+    background-color: -moz-field;
+    border: 1px solid darkgray;
+    - box-shadow: 1px 1px 1px 0 lightgray inset;
+    font: -moz-field;
+    font: -webkit-small-control;
+    font-family: "Helvetica";
+    width: 100%;
+    height: 34px;
+    border-radius: 7%;
+}
+
+.custom-input-container input {
+    width: 80% !important;
+    float: left;
+    height: 100%;
+    padding-left: 10px;
+    margin: 0 !important;
+    border: 0 !important;
+    font-family: "Helvetica";
+    font-size: 14px;
+}
+
+.custom-input-dropdown {
+    position: relative;
+    width: 20%;
+    float: left;
+    height: 100%;
+}
+
+.custom-input-dropdown:hover {
+    cursor: pointer;
+}
+
+.custom-input-dropdown > .caret {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.custom-input {
+    height: auto;
+    min-height: 34px;
+}
+
+/* jquery autocomplete */
+.ui-autocomplete {
+    font-family: "Helvetica";
+}
+
+/******************************************/
+
