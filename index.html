@@ -4,44 +4,31 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
-    <%--openlayers框架的引入--%>
     <script src="lib/openlayers/ol.js"></script>
     <%--<link href="lib/openlayers/control.css" rel="stylesheet" />--%>
     <link href="lib/openlayers/ol.css" rel="stylesheet" />
-    <%--地图框架设计样式的引入--%>
     <link href="style/logo.css" rel="stylesheet" />
     <link href="style/leaflet.css" rel="stylesheet" />
     <link href="style/mainPage.css" rel="stylesheet" />
-    <%--jquery框架的引入--%>
     <script src="lib/jquery/jquery-1.4.4.min.js"></script>
     <script src="lib/jquery/jquery-3.3.1.min.js"></script>
     <%--<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>--%>
     <script src="lib/jquery/jquery.cookie.js"></script>
     <script src="lib/jquery/jquery.session.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>
-    <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/> --%>          
-    <%--扩展ol的引入--%>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>       
     <link href="lib/openlayers/ol-ext/dist/ol-ext.css" rel="stylesheet" />
     <script src="lib/openlayers/ol-ext/dist/ol-ext.js"></script>
     <link href="lib/openlayers/ol-ext/examples/style.css" rel="stylesheet" />
-    <%--图层切换选择器的引入--%>
     <link href="style/ol-layerswitcher.css" rel="stylesheet" />
     <script src="lib/ol-layerswitcher.js"></script> 
-    <%--目录树生成的引入--%>
     <link href="lib/zTree/demo.css" rel="stylesheet" />
     <link href="lib/zTree/zTreeStyle.css" rel="stylesheet" />
     <script src="lib/zTree/jquery.ztree.core.js"></script>
     <script src="lib/zTree/jquery.ztree.excheck.js"></script>
     <script src="lib/zTree/jquery.ztree.exedit.js"></script>
-   
-    <%--时间插件的引入--%>
     <script src="lib/laydate/laydate.js"></script>
-
-    <%--<link rel="stylesheet" href="http://jrain.oscitas.netdna-cdn.com/tutorial/css/fontawesome-all.min.css"/> --%>  
-   <%-- <link href="style/font-awesome.min.css" rel="stylesheet" />
-    <link href="style/font-awesome.css" rel="stylesheet" />--%>
-	<link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>  
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>  
     <link href="lib/bootsnav/css/bootsnav.css" rel="stylesheet" />
     <script src="lib/bootsnav/js/bootsnav1.js"></script>
     <link href="lib/bootsnav/css/btmap.css" rel="stylesheet" />
@@ -55,13 +42,11 @@
     <link href="lib/login/css/login.css" rel="stylesheet" />
     <script src="lib/login/js/jquery.leanModal.min.js"></script>
    
-    <%--复选下拉框--%>
     <link href="lib/jquery/jqueryselect/Select.css" rel="stylesheet" />
     <%--<script src="lib/jquery/jqueryselect/fSelect.js"></script>--%>
     <script src="lib/jquery/jqueryselect/fselectnew.js"></script>
     <link href="style/olpopup.css" rel="stylesheet" />
 
-     <%--弹出框 --%>
     <link href="lib/jquery/jquerytctz/translucent/style.css" rel="stylesheet" />
 
     <script src="lib/jquery/jquerytctz/translucent/jquery-translucentn.js"></script>
@@ -310,17 +295,7 @@
 
 </head>
 <body>
-    <%--第一步、设置工具栏：主要完成两个工具（文件File和GPS查询（Tools））--%>
-    <%--第二步、加载地图--%>
     <div id="map" class="map">
-        <%--<div id="top-map-buttons" style="display:none;">            
-            <button class="btn btn-primary-outline">Layers</button>    
-            <button class="btn btn-primary-outline" id="insar-search">InSAR</button> 
-            <button class="btn btn-primary-outline" id="gps-search">GPS</button> 
-            <button class="btn btn-primary-outline" id="Adminmanagement" style="display:none;">User Management</button>
-            <input type="button"  class="btn btn-primary-outline" />
-            <input type="text" id="logmess" style= "background-color:transparent;width:15%;height:26px;color:red;font-weight:bold;border:0px;" value="guest" />
-        </div>--%>
         <div class="htmleaf-container" style="z-index:9;position:fixed;top:2px;">
             <div class="demo" style="height:50px;">
                 <div class="container" style="margin-left: initial;">
@@ -439,23 +414,18 @@
                                         <path fill="none" class="highcharts-tick" stroke="#ccd6eb" stroke-width="1" d="M 491.75 273 L 491.75 263" opacity="1"></path>
                                         <path fill="none" class="highcharts-tick" stroke="#ccd6eb" stroke-width="1" d="M 566.25 273 L 566.25 263" opacity="1"></path>
                                         <path fill="none" class="highcharts-tick" stroke="#ccd6eb" stroke-width="1" d="M 640.75 273 L 640.75 263" opacity="1"></path>
-                                        <%--<text x="374" data-z-index="7" text-anchor="middle" transform="translate(0,0)" class="highcharts-axis-title" style="color:#666666;fill:#666666;" y="312">
-                                            <tspan>Date</tspan>
-                                        </text>--%>
                                         <path fill="none" class="highcharts-axis-line" stroke="#ccd6eb" stroke-width="1" data-z-index="7" d="M 82 272.5 L 678 272.5"></path>
                                     </g>
                                     <g class="highcharts-axis highcharts-xaxis highcharts-navigator-xaxis" data-z-index="2"><path fill="none" class="highcharts-axis-line" data-z-index="7" d="M 81 577 L 667 577"></path></g>
                                     <g class="highcharts-axis highcharts-yaxis" data-z-index="2">
                                         <text x="130" data-z-index="7" text-anchor="middle" transform="translate(0,0) rotate(270 25.625 271.5)" class="highcharts-axis-title" style="color:#666666;fill:#666666;" y="285">
-                                        <tspan>Cumulative Disp.[mm]</tspan>
-                                        <%--<tspan x="130.625" dy="15"></tspan>--%>
+                                        <tspan>Cumulative Disp.[mm]</tspan>                 
                                         </text>
                                         <path fill="none" class="highcharts-axis-line" data-z-index="7" d="M 81 58 L 81 485"></path>
                                     </g>
                                     <g class="highcharts-axis highcharts-yaxis" data-z-index="2">
                                         <text x="130" text-anchor="middle" transform="translate(0,0) rotate(270 25.625 271.5)" class="highcharts-axis-title" style="color:#666666;fill:#666666;" y="975" data-z-index="7">
                                         <tspan>Incremental Disp.[mm]</tspan>
-                                        <%--<tspan x="130.625" dy="-15"></tspan>--%>
                                         </text>
                                         <path fill="none" class="highcharts-axis-line" data-z-index="7" d="M 81 58 L 81 785"></path>
                                     </g>
@@ -466,9 +436,7 @@
                                         <g data-z-index="0.1" class="highcharts-series highcharts-series-0 highcharts-scatter-series highcharts-color-0  highcharts-tracker" transform="translate(81,58) scale(1 1)" clip-path="url(#highcharts-vcwhpjv-3732-)"></g>
                                         
                                         <g id="chart_line" data-z-index="0.1" class="highcharts-series highcharts-series-0 highcharts-line-series highcharts-color-0" transform="translate(92,58) scale(1 1)" clip-path="url(#highcharts-2f92nj3-305-)">
-                                            <%--<path fill="none" d="M 0 109.97816022237237 L 19.752808988764 206.3191196266562 L 26.337078651685 168.83050620307426 L 46.089887640449 246.90665322417982 L 59.258426966292 146.91207438459008 L 79.011235955056 82.17578598360166 L 92.179775280899 167.87070496380238 L 98.76404494382 232.32667641776308 L 105.34831460674 88.10614499946536 L 138.26966292135 200.94676720040545 L 151.43820224719 214.15367466314154 L 164.60674157303 230.18093222193426 L 177.77528089888 244.0884251371019 L 190.94382022472 242.55119752511277 L 204.11235955056 208.18910986169544 L 230.44943820225 151.83934924254748 L 256.78651685393 67.45435494681152 L 269.95505617978 41.533247341712865 L 329.21348314607 217.98986710980543 L 335.79775280899 198.7942081851263 L 342.38202247191 236.5180846589308 L 348.96629213483 226.38119383156294 L 355.55056179775 271.2907187988367 L 362.13483146067 177.63365428025443 L 368.7191011236 204.7123844353482 L 375.30337078652 206.2401308187594 L 381.88764044944 195.95189691583332 L 388.47191011236 406.79164167245335 L 395.05617977528 175.8863483592871 L 401.6404494382 226.73817584042757 L 408.22471910112 165.59739996741365 L 414.80898876404 102.0953136781863 L 421.39325842697 213.5 L 427.97752808989 97.81145533919357 L 434.56179775281 34.68713354070991 L 441.14606741573 147.70131557931586 L 447.73033707865 170.5535910812515 L 454.31460674157 41.28047467271574 L 460.89887640449 175.14969302093093 L 467.48314606742 168.21794394155302 L 474.06741573034 91.53883093098915 L 480.65168539326 196.0022067471096 L 487.23595505618 36.16301584740535 L 493.8202247191 216.23575216881 L 500.40449438202 44.399697467683666 L 506.98876404494 183.43321277201193 L 513.57303370787 190.27241498604423 L 520.15730337079 108.73394731183839 L 526.74157303371 140.1534702355662 L 533.32584269663 165.54537350684342 L 539.91011235955 204.73291505655888 L 546.49438202247 202.95570134402567 L 553.07865168539 188.24569749087095 L 559.66292134831 154.36055406679696 L 566.24719101124 203.13602430342382 L 572.83146067416 211.7719776585388 L 579.41573033708 174.4170568486068 L 586 222.5202718569587" class="highcharts-graph" data-z-index="1" stroke="#7cb5ec" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>--%>
-                                            <%--<path fill="none" d="M -10 109.97816022237237 L 0 109.97816022237237 L 19.752808988764 206.3191196266562 L 26.337078651685 168.83050620307426 L 46.089887640449 246.90665322417982 L 59.258426966292 146.91207438459008 L 79.011235955056 82.17578598360166 L 92.179775280899 167.87070496380238 L 98.76404494382 232.32667641776308 L 105.34831460674 88.10614499946536 L 138.26966292135 200.94676720040545 L 151.43820224719 214.15367466314154 L 164.60674157303 230.18093222193426 L 177.77528089888 244.0884251371019 L 190.94382022472 242.55119752511277 L 204.11235955056 208.18910986169544 L 230.44943820225 151.83934924254748 L 256.78651685393 67.45435494681152 L 269.95505617978 41.533247341712865 L 329.21348314607 217.98986710980543 L 335.79775280899 198.7942081851263 L 342.38202247191 236.5180846589308 L 348.96629213483 226.38119383156294 L 355.55056179775 271.2907187988367 L 362.13483146067 177.63365428025443 L 368.7191011236 204.7123844353482 L 375.30337078652 206.2401308187594 L 381.88764044944 195.95189691583332 L 388.47191011236 406.79164167245335 L 395.05617977528 175.8863483592871 L 401.6404494382 226.73817584042757 L 408.22471910112 165.59739996741365 L 414.80898876404 102.0953136781863 L 421.39325842697 213.5 L 427.97752808989 97.81145533919357 L 434.56179775281 34.68713354070991 L 441.14606741573 147.70131557931586 L 447.73033707865 170.5535910812515 L 454.31460674157 41.28047467271574 L 460.89887640449 175.14969302093093 L 467.48314606742 168.21794394155302 L 474.06741573034 91.53883093098915 L 480.65168539326 196.0022067471096 L 487.23595505618 36.16301584740535 L 493.8202247191 216.23575216881 L 500.40449438202 44.399697467683666 L 506.98876404494 183.43321277201193 L 513.57303370787 190.27241498604423 L 520.15730337079 108.73394731183839 L 526.74157303371 140.1534702355662 L 533.32584269663 165.54537350684342 L 539.91011235955 204.73291505655888 L 546.49438202247 202.95570134402567 L 553.07865168539 188.24569749087095 L 559.66292134831 154.36055406679696 L 566.24719101124 203.13602430342382 L 572.83146067416 211.7719776585388 L 579.41573033708 174.4170568486068 L 586 222.5202718569587 L 586 222.5202718569587" visibility="visible" data-z-index="2" class="highcharts-tracker-line" stroke-linejoin="round" stroke="rgba(192,192,192,0.0001)" stroke-width="22"></path>--%>
-                                        </g>
+                                          </g>
 
 
                                         <g id="chart_pt" data-z-index="0.1" class="highcharts-markers highcharts-series-0 highcharts-scatter-series highcharts-color-0  highcharts-tracker" transform="translate(81,58) scale(1 1)"></g></g>
@@ -479,7 +447,7 @@
                                     <text x="10" text-anchor="start" class="highcharts-caption" data-z-index="4" style="color:#666666;fill:#666666;" y="607"></text>
                                     <text x="359" text-anchor="middle" class="highcharts-subtitle" data-z-index="4" style="color:#666666;fill:#666666;" y="39">
                                         <tspan id="chart_v"></tspan>
-                                        <%--velocity: -6.08 mm/yr,  v_std: 4.09 mm/yr--%><%--S1 IW 165 550 D--%>
+                                        
                                     </text>
                                     <g class="highcharts-legend" data-z-index="7">
                                         <rect fill="none" class="highcharts-legend-box" rx="0" ry="0" x="0" y="0" width="8" height="8" visibility="hidden"></rect>
@@ -632,13 +600,10 @@
   </div>
 </div>
 
-        <%--GPS按钮下的Run按钮点击后，弹出的数据处理运行的参数选择窗体--%>
-        <div id="GPSRun_Para" style="display:none;font-weight:700;text-align:center;font-size:4em;position: fixed;top:30%;left:30%;z-index:99;height:40%;width:40%;color:black;background:rgba(0,60,136,.5);">
-            
+      
+        <div id="GPSRun_Para" style="display:none;font-weight:700;text-align:center;font-size:4em;position: fixed;top:30%;left:30%;z-index:99;height:40%;width:40%;color:black;background:rgba(0,60,136,.5);">            
         </div>
-        <%--GPS按钮下的Run按钮点击后，弹出的数据处理运行的参数选择窗体--%>
 
-        <%--GPS按钮下的Run按钮点击后，弹出的数据处理运行的参数选择窗体--%>
         <div id="gpspopup" class="modal" tabindex="-1"  style="width:15%;min-width:300px;z-index:999;position:fixed; display: none;top: 60%;left:103.5%;opacity: 1;margin-left: -379px;margin-top: -273.5px">
             <div class="modal-header">
                 <button id="CloseGPSPopup" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -762,7 +727,7 @@
             <input type="image" id="imgsrc" style="width: 100%;" />        
         </div>
 
-        <%--Layers菜单的设置--%>
+
         <div id="firstpane" class="menu_list" style="display:none; z-index:999;position:fixed;top:60px;left:15px;">
             <h3 class="menu_head current">GPS</h3>
 	        <div style="display:none" class="menu_body">
@@ -884,7 +849,7 @@
     <div class="logoContainer">
          <input type="text" id="logotext" style= "background-color:transparent;border:0px;text-align:center;" value="形变监测成果展示系统" />
     </div>
-    <%--图例--%>
+ 
      <div id="legendContainer">
         <svg id="legendSVG" height="70%" width="100%" style="font-size: 17px;">
             <circle fill="rgb(0,0,255)" cx="30" cy="25" r="5" style="stroke: rgb(0,0,255);"></circle>
