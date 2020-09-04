@@ -878,21 +878,19 @@
         });
         //GPS的选择栏的select初始化
         $(function () {
-            $.ajax({
-                contentType: "application/json;charset:utf-8",
-                url: encodeURI("/Handler.ashx"),
-                data: { action: "getGPS_Project" },
-                success: function (mes) {
-                    var json = eval(mes);
-                    var str = '<optgroup label="Project"><option value="选择全部">选择全部</option>';
-                    for (var i = 1; i < json.length; i++) {
-                        str += '<option value="' + json[i].name + '">' + json[i].name + '</option>';
+		var gpsProjectName = [
+                { 'id': '1', pId: 0, 'name': 'project' },
+                { 'id': '11', 'pId': '1', 'name': 'CMONOC-I-CONT' },
+                { 'id': '12', 'pId': '1', 'name': 'CMONOC-II-CONT' },
+                { 'id': '13', 'pId': '1', 'name': 'CMONOC-II-CAMP' },
+            ];
+		var str = '<optgroup label="Project"><option value="选择全部">选择全部</option>';
+                    for (var i = 1; i < gpsProjectName.length; i++) {
+                        str += '<option value="' + gpsProjectName[i].name + '">' + gpsProjectName[i].name + '</option>';
                     }
                     str += '</optgroup>';
                     document.getElementById('search_gps_projectselect').innerHTML = str;
-                    $('#search_gps_projectselect').fSelect();
-                }
-            });
+                    $('#search_gps_projectselect').fSelect(); 
         });
         $('#search_gps_provinceselect').fSelect();
         
