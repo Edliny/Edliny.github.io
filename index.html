@@ -2667,7 +2667,7 @@
             },
             async: {
                 enable: true,
-                url: "/Handler.ashx?action=getLayers_Other&level=0",
+                url: "",
                 dataFilter: filter
             },
             data: {
@@ -2717,18 +2717,14 @@
 
         //调用jquery进行后台数据库请求
         $(function () {
-            //请求数据库数据
-            $.ajax({
-                contentType: "application/json;charset:utf-8",
-                url: encodeURI("/Handler.ashx"),
-                data: { action: "getLayers_Other" ,level:1},
-                success: function (mes) {
-                    json_other = eval(mes);
-                }
-            });
+            //请求data
+            $.getJSON("data/json/otherLayers.json", function (data) {
+                var $jsontip = $("#jsonTip");
+                json_other = data;
+                //初始化Other目录树
+               $.fn.zTree.init($("#treeDemoOther"), SettingLyOther,data);
 
-            //初始化Other目录树
-            $.fn.zTree.init($("#treeDemoOther"), SettingLyOther);
+            });
         });
 
         //InSAR的KML数据图层的清除
