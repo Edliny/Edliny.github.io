@@ -860,31 +860,25 @@
 
     <script type="text/javascript">
          $(function () {
-            $.ajax({
-                contentType: "application/json;charset:utf-8",
-                url: encodeURI("/Handler.ashx"),
-                data: { action: "getInSAR_Project" },
-                success: function (mes) {
-                    var json = eval(mes);
-                    var str = '<optgroup label="Project"><option value="选择全部">选择全部</option>';
-                    for (var i = 1; i < json.length; i++) {
-                        str += '<option value="' + json[i].name + '">' + json[i].name + '</option>';
-                    }
-                    str += '</optgroup>';
-                    document.getElementById('iproject').innerHTML = str;
-                    $('#iproject').fSelect();
-                }
+            $.getJSON("data/json/insarProject.json", function (data) {
+                var $jsontip = $("#jsonTip");
+                var str = '<optgroup label="Project"><option value="选择全部">选择全部</option>';
+                $jsontip.empty();
+                $.each(data, function (mes, infoinsar) {
+                    str += '<option value="' + infoinsar["name"] + '">' + infoinsar["name"] + '</option>';
+                })
+                str += '</optgroup>';
+                document.getElementById('iproject').innerHTML = str;
+                $('#iproject').fSelect();
+                
             });
-        });
-        //GPS的选择栏的select初始化
-        $(function () {
-	    var str = '<optgroup label="Project"><option value="选择全部">选择全部</option>';
+
             $.getJSON("data/json/gpsProject.json", function (data) {
                 var $jsontip = $("#jsonTip");
-                var str = "";
+                var str = '<optgroup label="Project"><option value="选择全部">选择全部</option>';
                 $jsontip.empty();
-                $.each(data, function (mes, info) {
-                    str += '<option value="' + info["name"] + '">' + info["name"] + '</option>';
+                $.each(data, function (mes, infogps) {
+                    str += '<option value="' + infogps["name"] + '">' + infogps["name"] + '</option>';
                 })
                 str += '</optgroup>';
                 document.getElementById('search_gps_projectselect').innerHTML = str;
@@ -1650,17 +1644,42 @@
             var date = document.getElementById('date').value;
             var scalevalue = (map.getView().getResolution()) * 3779.5275590551;
 
-	    var url = ["data/json/cont1.json", "data/json/cont2.json", "data/json/camp3.json"];
-            var urlgps = "";
-            if (project == "CMONOC-I-CONT") urlgps = url[0];
-            else if (project == "CMONOC-II-CONT") urlgps = url[1];
-            else urlgps = url[2];
-
+	    //读取gps的json文件数据
+            var urlgps = "data/json/gps.json";
+            var projectname = getParamValues('value', project_val, 0);
+            var provincename = getParamValues('value', province_val, 0);
             $.getJSON(urlgps, function (data) {
-                debugger
-                json_pt = data;
+                var res0 = [];
+                var res1 = [];
+                var res2 = [];
+                var result = [];
+                if (mode != "All") {
+                    res0 = data.filter(a => a.siteproperty == formatter(mode));
+                } else { res0 = data; }
+               
+               for (var i = 0; i < projectname.length; i++) {
+                   res1.push(res0.filter(a => a.projectname == projectname[i]))
+               }
+           
+               for (var i = 0; i < provincename.length; i++) {
+                   for (var k = 0; k < res1.length; k++) {
+                       res2.push(res1[k].filter(a => a.province == provincename[i]))
+                   }
+               }
+               
+               if (res2.length != 0) {
+                   for (var i = 0; i < res2.length; i++) {
+                       if (res2[i].length != 0) {
+                           for (var j = 0; j < res2[i].length; j++) {
+                               result.push(res2[i][j]);
+                           }
+                       }
+                   }
+               }
+               json_pt = result;
+               console.log(json_pt);              
                 Show_GPS(json_pt, style, vectorLayer_GPS, vectorLayer_Label);
-            });		
+            });	
 
             //初始化Layers菜单栏的GPS目录树
             InitLyGPS(project, province, mode, date);
