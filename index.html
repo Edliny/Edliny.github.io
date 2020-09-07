@@ -1791,14 +1791,13 @@
             ClearLayer(vectorLayer_Label, true);
 
             var sitetext = document.getElementById('sitetext').value;
-            $.ajax({
-                contentType: "application/json;charset:utf-8",
-                url: encodeURI("/Handler.ashx"),
-                data: { action: "getGPS_SinglePoint", sitetext: sitetext },
-                success: function (mes) {
-                    json_pt = eval(mes);
-                    Show_GPS(json_pt, "point", vectorLayer_GPS, vectorLayer_Label);
-                }
+            //读取gps的json文件数据
+            $.getJSON("data/json/gps.json", function (data) {
+                var result = data.filter(a => a.name == sitetext);
+                json_pt = result;
+                //初始化Layers菜单栏的GPS目录树
+                InitLyGPS(result);
+                Show_GPS(json_pt, "point", vectorLayer_GPS, vectorLayer_Label);
             });
         });
 
