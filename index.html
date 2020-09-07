@@ -1725,6 +1725,18 @@
             });
         });
 
+	function formatter(value) {
+            if (value == "continuous") return "连续站";
+            else return "流动站";
+        }
+
+        function getParamValues(name, arr,start) {
+            var ret = []
+            for (var i = start, len = arr.length; i < len; i++) {
+                ret.push(arr[i][name])
+            }
+            return ret
+        }
         //调用jquery进行GPS点位信息的保存
         $('#Edit_GPS_Save').click(function (item) {
             var project = $('#edit_gps_projectselect option:selected').val();
