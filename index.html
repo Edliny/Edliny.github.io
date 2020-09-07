@@ -1594,9 +1594,13 @@
         };
 
         //设置初始化Layers菜单的GPS目录
-        function InitLyGPS(project, province, mode, date) {
-            SettingLyGPS.async.url = "/Handler.ashx?action=getLayers_GPS&project=" + project + "&province=" + province + "&mode=" + mode + "&date=" + date;
-            $.fn.zTree.init($("#treeDemoinput"), SettingLyGPS);
+        function InitLyGPS(data) {      
+            var NodesGPS = [{ id: 1, pId: 0, name: "result", isParent: true, checked: true, open: true }];
+            for (var j = 0; j < data.length; j++) {
+                var pp = { id: 11 + j, pId: 1, name: data[j].name, 'icon': 'image/ee.png', checked: true };
+                NodesGPS[j + 1] = pp;
+            }
+            $.fn.zTree.init($("#treeDemoinput"), SettingLyGPS, NodesGPS);                    
         };
 
         //调用jquery处理GPS的复杂数据查询并显示
@@ -1677,12 +1681,12 @@
                    }
                }
                json_pt = result;
-               console.log(json_pt);              
-                Show_GPS(json_pt, style, vectorLayer_GPS, vectorLayer_Label);
+               //初始化Layers菜单栏的GPS目录树
+               InitLyGPS(result);  
+               Show_GPS(json_pt, style, vectorLayer_GPS, vectorLayer_Label);
             });	
 
-            //初始化Layers菜单栏的GPS目录树
-            InitLyGPS(project, province, mode, date);
+            
             //修改GPS显示样式值（point/velocity），用于Layer层的显示删除
             GPS_style = style;
         });
