@@ -2224,25 +2224,19 @@
             var iform = $('#iform option:selected').val();
             var NodesInSAR = [{ id: 1, pId: 0, name: "result", checked: false, isParent: true, open: true }];
 
-            //进行后台请求数据库数据资源
-            $.ajax({
-                contentType: "application/json;charset:utf-8",
-                url: encodeURI("/Handler.ashx"),
-                data: { action: "getInSAR_Polygon", project: iproject, satellite: isatellite, track: itrack, frame: iframe, mode: imode, flight_Dir: iflight_Dir, date: idate, form: iform },
-                success: function (mes) {
-                    json_polygon = eval(mes);
-                    InSAR_Show_Polygon(json_polygon, vectorLayer_InSAR_Polygon);
+            $.getJSON("data/json/insar/ploygen.json", function (data) {
+                json_polygon = data;
+                InSAR_Show_Polygon(json_polygon, vectorLayer_InSAR_Polygon);
 
-                    for (var i = 0, j = 0; i < json_polygon.length; i += 4, j++) {
-                        var k1 = json_polygon[i].startdate.split(" ")[0];
-                        var k2 = json_polygon[i].enddate.split(" ")[0];
-                        var strname = json_polygon[i].satellite + "_" + json_polygon[i].track + "_" + json_polygon[i].frame + "_" + json_polygon[i].mode + "_" + json_polygon[i].flight_dir + "_" + k1 + "_" + k2 + "_" + json_polygon[i].w + "_" + json_polygon[i].l + "_" + json_polygon[i].form + "_" + json_polygon[i].project;
-                        var pp = { id: 11 + j, pId: 1, name: strname, checked: false, isParent: false };
-                        NodesInSAR[j + 1] = pp;
-                    }
-                    //初始化Layers菜单栏的InSAR目录树
-                    $.fn.zTree.init($("#treeDemoInSAR"), settingInSAR, NodesInSAR);
+                for (var i = 0, j = 0; i < json_polygon.length; i += 4, j++) {
+                    var k1 = json_polygon[i].startdate.split(" ")[0];
+                    var k2 = json_polygon[i].enddate.split(" ")[0];
+                    var strname = json_polygon[i].satellite + "_" + json_polygon[i].track + "_" + json_polygon[i].frame + "_" + json_polygon[i].mode + "_" + json_polygon[i].flight_dir + "_" + k1 + "_" + k2 + "_" + json_polygon[i].w + "_" + json_polygon[i].l + "_" + json_polygon[i].form + "_" + json_polygon[i].project;
+                    var pp = { id: 11 + j, pId: 1, name: strname, checked: false, isParent: false };
+                    NodesInSAR[j + 1] = pp;
                 }
+                //初始化Layers菜单栏的InSAR目录树
+                $.fn.zTree.init($("#treeDemoInSAR"), settingInSAR, NodesInSAR);
             });
 
         });
