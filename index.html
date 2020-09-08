@@ -2247,11 +2247,22 @@
                 if (iform != "All") {
                     res2 = res1.filter(a => a.form == iform);
                 } else { res2 = res1; }
+                res0 = [];
                 for (var i = 0; i < projectname.length; i++) {
-                    result.push(res2.filter(a => a.project == projectname[i]))
+                    debugger
+                    res0.push(res2.filter(a => a.project == projectname[i]))
                 }
 
-                json_polygon = result[0];
+                if (res0.length != 0) {
+                    for (var i = 0; i < res0.length; i++) {
+                        if (res0[i].length != 0) {
+                            for (var j = 0; j < res0[i].length; j++) {
+                                result.push(res0[i][j]);
+                            }
+                        }
+                    }
+                }
+                json_pt = result;
                 //初始化Layers菜单栏的InSAR目录树
                 InitLyInSAR(json_polygon);
                 InSAR_Show_Polygon(json_polygon, vectorLayer_InSAR_Polygon);
