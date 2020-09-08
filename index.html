@@ -2200,9 +2200,7 @@
 
             //获取查询的参数
             //项目的获取
-            //var iproject = $('#iproject option:selected').val();//选中的值
-
-            var iproject = "";//获取项目名字符串  
+             var iproject = "";//获取项目名字符串  
             var project_val = $('#iproject option:selected');//获取已选项目的数组对象        
             if (project_val.length < 1) {
                 alert("请勾选项目！");
@@ -2222,25 +2220,59 @@
             var iflight_Dir = $('#iflight_Dir option:selected').val();
             var idate = document.getElementById('idate').value;
             var iform = $('#iform option:selected').val();
-            var NodesInSAR = [{ id: 1, pId: 0, name: "result", checked: false, isParent: true, open: true }];
+            
+            var projectname = getParamValues('value', project_val, 0);
 
             $.getJSON("data/json/insar/ploygen.json", function (data) {
-                json_polygon = data;
-                InSAR_Show_Polygon(json_polygon, vectorLayer_InSAR_Polygon);
-
-                for (var i = 0, j = 0; i < json_polygon.length; i += 4, j++) {
-                    var k1 = json_polygon[i].startdate.split(" ")[0];
-                    var k2 = json_polygon[i].enddate.split(" ")[0];
-                    var strname = json_polygon[i].satellite + "_" + json_polygon[i].track + "_" + json_polygon[i].frame + "_" + json_polygon[i].mode + "_" + json_polygon[i].flight_dir + "_" + k1 + "_" + k2 + "_" + json_polygon[i].w + "_" + json_polygon[i].l + "_" + json_polygon[i].form + "_" + json_polygon[i].project;
-                    var pp = { id: 11 + j, pId: 1, name: strname, checked: false, isParent: false };
-                    NodesInSAR[j + 1] = pp;
+                
+                var res0 = [];
+                var res1 = [];
+                var res2 = [];
+                var result = [];
+                if (isatellite != "All") {
+                    res0 = data.filter(a => a.satellite == isatellite);
+                } else { res0 = data; }
+                if (itrack != "All") {
+                    res1 = res0.filter(a => a.track == parseInt(itrack).toString());
+                } else { res1 = res0; }
+                if (iframe != "All") {
+                    res2 = res1.filter(a => a.frame == iframe);
+                } else { res2 = res1; }
+                if (imode != "All") {
+                    res0 = res2.filter(a => a.mode == imode);
+                } else { res0 = res2; }
+                if (iflight_Dir != "All") {
+                    res1 = res0.filter(a => a.flight_dir == iflight_Dir);
+                } else { res1 = res0; }
+                if (iform != "All") {
+                    res2 = res1.filter(a => a.form == iform);
+                } else { res2 = res1; }
+                for (var i = 0; i < projectname.length; i++) {
+                    result.push(res2.filter(a => a.project == projectname[i]))
                 }
+
+                json_polygon = result[0];
                 //初始化Layers菜单栏的InSAR目录树
-                $.fn.zTree.init($("#treeDemoInSAR"), settingInSAR, NodesInSAR);
+                InitLyInSAR(json_polygon);
+                InSAR_Show_Polygon(json_polygon, vectorLayer_InSAR_Polygon);
             });
 
         });
 
+	//设置初始化Layers菜单的InSAR目录
+        function InitLyInSAR(data) {
+            var NodesInSAR = [{ id: 1, pId: 0, name: "result", checked: false, isParent: true, open: true }];
+
+            for (var i = 0, j = 0; i < data.length; i += 4, j++) {
+                var k1 = data[i].startdate.split(" ")[0];
+                var k2 = data[i].enddate.split(" ")[0];
+                var strname = data[i].satellite + "_" + data[i].track + "_" + data[i].frame + "_" + data[i].mode + "_" + data[i].flight_dir + "_" + k1 + "_" + k2 + "_" + data[i].w + "_" + data[i].l + "_" + data[i].form + "_" + data[i].project;
+                var pp = { id: 11 + j, pId: 1, name: strname, checked: false};
+                NodesInSAR[j + 1] = pp;
+            }
+            $.fn.zTree.init($("#treeDemoInSAR"), settingInSAR, NodesInSAR);
+        };
+	    
         //调用jquery按照设置的去除点的百分比重新设置点云的样式
         $('#Edit_Colorbar_Finish').click(function () {
             var percent = $('#edit_colorbar_percentval').val();
@@ -2299,44 +2331,26 @@
 
         function onCheck_InSAR(e, treeId, treeNode) {
             var zTree = $.fn.zTree.getZTreeObj("treeDemoInSAR");
-            if (treeNode.checked==true) {
-                var iproject = zTree.getCheckedNodes()[0].name;
+            if (treeNode.checked==true) {             
                 var name = treeNode.name;
-                name = name.split("_");
-
-                var isatellite = name[0];
-                var itrack = name[1];
-                var iframe = name[2];
-                var imode = name[3];
-                var iflight_Dir = name[4];
-                var startdate = name[5];
-                var enddate = name[6];
+                name = name.split("_");               
                 var width = name[7];
                 var length = name[8];
                 var iform = name[9];
-                var project="";
-                if (name.length > 10) {
-                    for (var i = 10; i < name.length; i++) {
-                        project = project + name[i];
-                        if (i < name.length - 1) {
-                            project = project + "_";
-                        }
-                    }
-                }
-                 
-
+                
+		//读取gps的json文件数据
+                var reg = new RegExp("/", "g");
+                var strurl = treeNode.name.replace(reg, "_");
+                var urlgps = "data/json/insar/out/" + strurl + ".json";
+      
                 $.ajax({
-                    contentType: "application/json;charset:utf-8",
-                    url: encodeURI("/Handler.ashx"),
-                    data: { action: "getInSAR_Point", project: project, satellite: isatellite, track: itrack, frame: iframe, mode: imode, flight_Dir: iflight_Dir, startdate: startdate, enddate: enddate, form: iform },
-                    success: function (mes) {
-                        json_pcl = eval(mes);
-                        console.log(json_pcl);
+                    type: "GET",
+                    url: urlgps,
+                    dataType: "json",
+                    success: function (data) {
+                        json_pcl = data;
                         if (iform == "PointCloud") {
-
                             Vars_InSARPCL[treeNode.name] = treeNode.name;
-
-                            //InSAR数据的Json数组分级获取 
                             json_zoom0 = json_pcl;
                             InSAR_Get_JsonZoom(json_zoom0, 2, json_zoom1);
                             InSAR_Get_JsonZoom(json_zoom0, 3, json_zoom2);
@@ -2347,18 +2361,15 @@
                             InSAR_Get_JsonZoom(json_zoom0, 35, json_zoom7);
                             InSAR_Get_JsonZoom(json_zoom0, 70, json_zoom8);
                             InSAR_Get_JsonZoom(json_zoom0, 140, json_zoom9);
-
                             //首层InSAR数据的加载显示
                             InSAR_Show_PCL(json_zoom0, 20, width, length, 0, vectorLayer_InSARZoomIn);
-
                             //图层添加显示
                             map.addLayer(vectorLayer_InSARZoomIn);
-                           
                         } else {
                             InSAR_KML(json_pcl, treeNode.name);
                         }
                     }
-                });
+                });		    
                 vectorLayer_InSAR_Polygon.setVisible(false);
             }
             else if (treeNode.checked == false) {
