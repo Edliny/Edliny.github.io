@@ -2249,7 +2249,6 @@
                 } else { res2 = res1; }
                 res0 = [];
                 for (var i = 0; i < projectname.length; i++) {
-                    debugger
                     res0.push(res2.filter(a => a.project == projectname[i]))
                 }
 
@@ -2262,7 +2261,7 @@
                         }
                     }
                 }
-                json_pt = result;
+                json_polygon = result;
                 //初始化Layers菜单栏的InSAR目录树
                 InitLyInSAR(json_polygon);
                 InSAR_Show_Polygon(json_polygon, vectorLayer_InSAR_Polygon);
