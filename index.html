@@ -2268,58 +2268,7 @@
                 //初始化Layers菜单栏的InSAR目录树
                 InitLyInSAR(json_polygon);
                 InSAR_Show_Polygon(json_polygon, vectorLayer_InSAR_Polygon);
-            });
-	
-            //读取时间序列文件
-            $.ajax({
-                type: "GET",
-                url: "data/json/insar/ts/ts.json",
-                dataType: "json",
-                success: function (data) {
-                    var tsurl = data[0].url;
-                    for (var i = 0; i < tsurl.length/3; i++) {
-                        $.ajax({
-                            type: "GET",
-                            url: tsurl[i],
-                            dataType: "json",
-                            success: function (mes) {
-                                var str = mes[0].date + "_" + mes[0].file;
-                                Vars_Tscum[str] = mes;
-                                tsCumDate.push({ 'date':str});
-                               
-                            }
-                        });
-                    }
-
-                    for (var j = tsurl.length / 3; j < tsurl.length / 3*2; j++) {
-                        $.ajax({
-                            type: "GET",
-                            url: tsurl[j],
-                            dataType: "json",
-                            success: function (mes) {
-                                var str = mes[0].date + "_" + mes[0].file;
-                                Vars_Tsincr[str] = mes;
-                                tsIncrDate.push({ 'date': str });
-
-                            }
-                        });
-                    }
-                    for (var k = tsurl.length / 3*2; k < tsurl.length; k++) {
-                        $.ajax({
-                            type: "GET",
-                            url: tsurl[k],
-                            dataType: "json",
-                            success: function (mes) {
-                                var str = mes[0].date + "_" + mes[0].file;
-                                Vars_Tserr[str] = mes;
-                                tsErrDate.push({ 'date': str });
-
-                            }
-                        });
-                    }
-                }
-            }); 
-		
+            });			
         });
 
 	//设置初始化Layers菜单的InSAR目录
@@ -2394,17 +2343,29 @@
 
         function onCheck_InSAR(e, treeId, treeNode) {
             var zTree = $.fn.zTree.getZTreeObj("treeDemoInSAR");
-            if (treeNode.checked==true) {             
+            if (treeNode.checked==true) {  
+		//设置隐藏多边形
+                vectorLayer_InSAR_Polygon.setVisible(false);    
+		    
                 var name = treeNode.name;
                 name = name.split("_");               
                 var width = name[7];
                 var length = name[8];
                 var iform = name[9];
-                
+                var project="";
+                if (name.length > 10) {
+                    for (var i = 10; i < name.length; i++) {
+                        project = project + name[i];
+                        if (i < name.length - 1) {
+                            project = project + "_";
+                        }
+                    }
+                }
+		    
 		//读取gps的json文件数据
                 var reg = new RegExp("/", "g");
                 var strurl = treeNode.name.replace(reg, "_");
-                var urlgps = "data/json/insar/out/" + strurl + ".json";
+                var urlgps = "data/json/insar/" + project+"/out/" + strurl + ".json";
       
                 $.ajax({
                     type: "GET",
@@ -2432,8 +2393,60 @@
                             InSAR_KML(json_pcl, treeNode.name);
                         }
                     }
-                });		    
-                vectorLayer_InSAR_Polygon.setVisible(false);
+                });	
+		    
+		if (iform == "PointCloud") {
+                    //读取时间序列文件
+                    $.ajax({
+                        type: "GET",
+                        url: "data/json/insar/"+project+"/ts/ts.json",
+                        dataType: "json",
+                        success: function (data) {
+                            var tsurl = data[0].url;
+                            for (var i = 0; i < tsurl.length / 3; i++) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: tsurl[i],
+                                    dataType: "json",
+                                    success: function (mes) {
+                                        var str = mes[0].date + "_" + mes[0].file;
+                                        Vars_Tscum[str] = mes;
+                                        tsCumDate.push({ 'date': str });
+
+                                    }
+                                });
+                            }
+
+                            for (var j = tsurl.length / 3; j < tsurl.length / 3 * 2; j++) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: tsurl[j],
+                                    dataType: "json",
+                                    success: function (mes) {
+                                        var str = mes[0].date + "_" + mes[0].file;
+                                        Vars_Tsincr[str] = mes;
+                                        tsIncrDate.push({ 'date': str });
+
+                                    }
+                                });
+                            }
+                            for (var k = tsurl.length / 3 * 2; k < tsurl.length; k++) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: tsurl[k],
+                                    dataType: "json",
+                                    success: function (mes) {
+                                        var str = mes[0].date + "_" + mes[0].file;
+                                        Vars_Tserr[str] = mes;
+                                        tsErrDate.push({ 'date': str });
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+		}
+              
             }
             else if (treeNode.checked == false) {
                 //当取消勾选的时候，删除要素并移除图层
