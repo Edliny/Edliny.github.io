@@ -994,7 +994,6 @@
                 success: function (mes) {
                     var json = eval(mes);
                     LoginCookie(json, level, mark);
-                    console.log(json);
                 }
             });
         };
@@ -1020,7 +1019,6 @@
                 else {
                     Verify(name, pwd);
                 }
-                //console.log(0);
                 document.getElementById('login').innerHTML = "Logout";
             });
         });
@@ -2019,8 +2017,6 @@
                     }
                 }
             }
-            console.log(json_zoom);
-
         };
       
         //设置计算天数函数
@@ -2077,8 +2073,7 @@
                 max = json_sorte[json_sorte.length - 1].date;
                 detal = Calday(min, max);//
                 var md_interval = Math.ceil(detal / 30.0 / 8.0/2.0); //一半的间隔
-                var min_yr = new Date(min.slice(0, 4) + "/01/01");
-                console.log(json_sorte);
+                var min_yr = new Date(min.slice(0, 4) + "/01/01");		    
 
                 //设置沉降点的位置和样式
                 var xx = 0.003999999333335, yy = 0.99999800000016;
@@ -2681,7 +2676,6 @@
                         mes[3 * tsCumDate.length] = {
                             'date': 'none', 'settle': '0', 'file': 'errormap'
                         };
-                        console.log(mes);
                         json_chart_total = mes;
     
                         InSAR_Show_Chart(json_chart_total, parseFloat(f[i].values_.settle).toFixed(2));
