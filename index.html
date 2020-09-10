@@ -2662,7 +2662,12 @@
                         var l = json_zoom[i].length;
                         var w = json_zoom[i].width;
                         var col = name[8];
-                        var indexn = parseInt(l) * parseInt(col) + parseInt(w); 
+                        var indexn = parseInt(l) * parseInt(col) + parseInt(w);
+			//排序
+                        tsCumDate = tsCumDate.sort(sort_by('date', true, parseFloat));
+                        tsIncrDate = tsIncrDate.sort(sort_by('date', true, parseFloat));
+                        tsErrDate = tsErrDate.sort(sort_by('date', true, parseFloat));
+			    
                         for (k = 0; k < tsCumDate.length; k++) {
 
                             mes.push(Vars_Tscum[tsCumDate[k].date][indexn]); 
