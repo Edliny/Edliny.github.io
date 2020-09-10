@@ -1926,7 +1926,8 @@
                         if (json[j * width + i].settle != "-10000") {
                             var iconFeature = new ol.Feature({
                                 geometry: new ol.geom.Point(ol.proj.fromLonLat([parseFloat(json[j * width + i].lon), parseFloat(json[j * width + i].lat)])),
-                                settle: json[j * width + i].settle
+                                settle: json[j * width + i].settle,
+				err: json[j * width + i].err
                             });
 
                             if (parseFloat(json[j * width + i].settle) > max) {
@@ -2267,7 +2268,57 @@
                 InitLyInSAR(json_polygon);
                 InSAR_Show_Polygon(json_polygon, vectorLayer_InSAR_Polygon);
             });
+	
+            //读取时间序列文件
+            $.ajax({
+                type: "GET",
+                url: "data/json/insar/ts/ts.json",
+                dataType: "json",
+                success: function (data) {
+                    var tsurl = data[0].url;
+                    for (var i = 0; i < tsurl.length/3; i++) {
+                        $.ajax({
+                            type: "GET",
+                            url: tsurl[i],
+                            dataType: "json",
+                            success: function (mes) {
+                                var str = mes[0].date + "_" + mes[0].file;
+                                Vars_Tscum[str] = mes;
+                                tsCumDate.push({ 'date':str});
+                               
+                            }
+                        });
+                    }
 
+                    for (var j = tsurl.length / 3; j < tsurl.length / 3*2; j++) {
+                        $.ajax({
+                            type: "GET",
+                            url: tsurl[j],
+                            dataType: "json",
+                            success: function (mes) {
+                                var str = mes[0].date + "_" + mes[0].file;
+                                Vars_Tsincr[str] = mes;
+                                tsIncrDate.push({ 'date': str });
+
+                            }
+                        });
+                    }
+                    for (var k = tsurl.length / 3*2; k < tsurl.length; k++) {
+                        $.ajax({
+                            type: "GET",
+                            url: tsurl[k],
+                            dataType: "json",
+                            success: function (mes) {
+                                var str = mes[0].date + "_" + mes[0].file;
+                                Vars_Tserr[str] = mes;
+                                tsErrDate.push({ 'date': str });
+
+                            }
+                        });
+                    }
+                }
+            }); 
+		
         });
 
 	//设置初始化Layers菜单的InSAR目录
@@ -2595,38 +2646,39 @@
                     var d_lon = prof[0] - pro[0];
                     var d_lat = prof[1] - pro[1];
                     if ((Math.abs(d_lat) < 0.0007) && (Math.abs(d_lon) < 0.0007)) {
-                        var InSAR_settle = f[i].values_.settle;
-
                         var zTree = $.fn.zTree.getZTreeObj("treeDemoInSAR");
                         var name = zTree.getCheckedNodes()[1].name;
-                        var project = zTree.getCheckedNodes()[0].name;
-                        name = name.split("_");
-                        var urlStr = encodeURI("/Handler.ashx");
-                        $.ajax({
-                            contentType: "application/json;charset:utf-8",
-                            url: urlStr,
-                            data: { action: "getInSAR_TimeSeries", date: json_zoom[i].date, w: json_zoom[i].width, l: json_zoom[i].length, project: project, width: name[7], length: name[8] },
-                            success: function (mes) {
-                                json_chart_total = eval(mes);                               
-                                InSAR_Show_Chart(json_chart_total, parseFloat(f[i].values_.settle).toFixed(2));
+                        name = name.split("_");                       
+			    
+			//获取时间序列图的数据    
+			var mes = [];
+                        var k = 0;
+                        var l = json_zoom[i].length;
+                        var w = json_zoom[i].width;
+                        var col = name[8];
+                        var indexn = parseInt(l) * parseInt(col) + parseInt(w); 
+                        for (k = 0; k < tsCumDate.length; k++) {
 
-                                //添加InSAR点云的浮云窗
-                                var InSAR_str = '<code>velocity: ' + parseFloat(f[i].values_.settle).toFixed(2).toString()+ '± ' + f[i].values_.err.toString() + 'mm/yr<code>';
-                                /*if (InSAR_settle != "") {
-                                    if (json_chart_total[json_chart_total.length - 1].settle != "-10000") {
-                                        var InSAR_std = parseFloat(json_chart_total[json_chart_total.length - 1].settle).toFixed(2);
-                                        InSAR_str += '± ' + InSAR_std.toString() + 'mm/yr<code>';
-                                    } else {
-                                        InSAR_str += 'mm/yr<code>';
-                                    }
-                                    
-                                    InSAR_content.innerHTML = InSAR_str;
-                                    InSAR_overlay.setPosition(coordinate);
-                                }*/
-                                InSAR_content.innerHTML = InSAR_str;
-                                InSAR_overlay.setPosition(coordinate);
-                            }
-                        });
+                            mes.push(Vars_Tscum[tsCumDate[k].date][indexn]); 
+                        }
+                        for (k=0; k < tsCumDate.length; k++) {
+                            mes.push(Vars_Tsincr[tsIncrDate[k].date][indexn]);
+                        }
+                        for (k = 0; k < tsCumDate.length; k++) {
+                            mes.push(Vars_Tserr[tsErrDate[k].date][indexn]);
+                        }
+                        mes[3 * tsCumDate.length] = {
+                            'date': 'none', 'settle': '0', 'file': 'errormap'
+                        };
+                        console.log(mes);
+                        json_chart_total = mes;
+    
+                        InSAR_Show_Chart(json_chart_total, parseFloat(f[i].values_.settle).toFixed(2));
+                        //添加InSAR点云的浮云窗
+                        var InSAR_str = '<code>velocity: ' + parseFloat(f[i].values_.settle).toFixed(2).toString() + '± ' + f[i].values_.err.toString() + 'mm/yr<code>';
+                        InSAR_content.innerHTML = InSAR_str;
+                        InSAR_overlay.setPosition(coordinate);
+			    
                         break;
                     }
                 }
