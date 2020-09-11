@@ -1112,7 +1112,7 @@ body.on-side .wrap-sticky nav.navbar.bootsnav.sticked {
 
         nav.navbar.bootsnav ul.nav li.dropdown ul.dropdown-menu > li > a {
             display: block;
-            width: 100%;
+            width: 100px;
             border-bottom: solid 1px #e0e0e0;
             padding: 10px 0;
             color: #6f6f6f;
