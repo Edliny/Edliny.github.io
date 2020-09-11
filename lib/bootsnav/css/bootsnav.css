@@ -995,7 +995,7 @@ body.on-side .wrap-sticky nav.navbar.bootsnav.sticked {
 
 @media (min-width: 768px) {
     .headernavline {
-        width: 350px;
+        width: 280px;
     }
 }
 
@@ -1324,7 +1324,7 @@ body.on-side .wrap-sticky nav.navbar.bootsnav.sticked {
         background: #fff;
         z-index: 99;
         width: 120px;
-        min-height: 210px;
+        min-height: 150px;
         left: 15px;
         top: 2px;
         padding: 0;
