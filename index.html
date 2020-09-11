@@ -315,8 +315,7 @@
 	                                        <li><a id="Datamanagement" href="#" data-toggle="modal">Edit</a></li>                                
 	                                        <li><a href="#">Run</a></li>                                    
 	                                    </ul>
-	                                </li>
-                                    <li><a href="#loginmodal" data-hover="Portfolio" id="login" >Login</a></li>       
+	                                </li>      
 	                            </ul>
 	                        </div>
 	                    </nav>
@@ -895,151 +894,6 @@
             $(this).siblings().removeClass("current");
         });
     </script>
-
-    <script type="text/javascript">
-        function setCookie(cname, cvalue, exdays) {
-            /*****利用全局变量的特性，设置cookie，将登陆的用户名提交到系统上存储*****/
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + "; " + expires;
-        };
-        function delAllCookie() {
-            var myDate = new Date();
-            myDate.setTime(-1000);//设置时间    
-            var data = document.cookie;
-            var dataArray = data.split("; ");
-            for (var i = 0; i < dataArray.length; i++) {
-                var varName = dataArray[i].split("=");
-                document.cookie = varName[0] + "=''; expires=" + myDate.toGMTString();
-            }
-        };
-        function Loginmess(json) {
-            /*****Ajax请求成功后执行的函数，通过判断json字符集的长度验证是否成功登陆*****/
-            if (json.length == 0) {
-                alert("该用户名或密码错误请重新输入！");
-            }
-            else {
-                alert("登陆成功！");
-                delAllCookie();//删除所有cookie变量，保证只有一个管理员登陆，以防出现cookie的信息提取错误 
-                var name = document.getElementById('username').value;
-                setCookie("name", name, 1);
-                
-                $('#loginmodal').fadeOut();
-                //window.location.reload(true);
-            }
-        };
-        function Verify(name, password) {
-            /*****Login按钮点击时调用的函数，通过Ajax请求后台数据库，验证服务器中该信息是否存在******/
-            var urlStr = encodeURI("/DataRun.ashx");
-            $.ajax({
-                contentType: "application/json;charset:utf-8",
-                url: urlStr,
-                /******name：用户名；password：密码 ******/
-                data: { action: "Verifylogin", name: name, password: password },
-                success: function (mes) {
-                    var json = eval(mes);
-                    Loginmess(json);
-                }
-            });
-        };
-
-        function LoginCookie(json, level, mark) {
-            //json.length == 0代表还没有登录，1代表登陆了
-            /*level：0代表跳转到数据管理页；1代表跳转到管理员管理页 
-            level=0代表是普通管理员，因此只能有数据管理权限
-            level=1代表的是系统管理员，具有数据管理和用户管理的权限
-            */
-            /*mark：0代表数据管理和用户管理的认证；1代表初始化页面是否登录了的认证*/
-            if (0 == mark) {
-                if (0 == level) {
-                    if (json.length == 0) {
-                        alert("你还不是管理员，没有访问权限，请登录！");
-                    }
-                    else {
-
-                        //进行jquery请求数据库的GPS项目数据
-                        $.ajax({
-                            contentType: "application/json;charset:utf-8",
-                            url: encodeURI("/Handler.ashx"),
-                            data: { action: "getGPS_Project" },
-                            success: function (mes) {
-                                var json = eval(mes);
-                                for (var i = 1; i < json.length; i++) {
-                                    $("#edit_gps_projectselect").append("<option>" + json[i].name + "</option>");
-                                }
-                            }
-                        });
-                        $("#Edit_GPS").fadeIn("slow");
-                    }
-                }
-            }
-            if (1 == mark) {
-                if (json.length == 0) {
-                    document.getElementById('login').innerHTML = 'Login';
-                }
-                else {
-                    document.getElementById('login').innerHTML = 'Logout';
-                }
-            }
-        };
-
-        function VerifyCookie(name, level, mark) {
-            /*name：用户名；level：0代表管理员的检验；1代表系统管理员的检验 */
-            var urlStr = encodeURI("/DataRun.ashx");
-            $.ajax({
-                contentType: "application/json;charset:utf-8",
-                url: urlStr,
-                data: { action: "VerifyCookie", name: name, level: level },
-                success: function (mes) {
-                    var json = eval(mes);
-                    LoginCookie(json, level, mark);
-                }
-            });
-        };
-
-        $("#login").init(function () {
-            var name = document.cookie.split(';')[0].split('=')[1];
-            var flag = 1;
-            var mark = 1;
-            VerifyCookie(name, flag, mark);
-            VerifyCookie(name, 0, mark);
-        });
-
-        $(function () {
-            $('#loginbtn').click(function (e) {
-                var name = $('#username').val();
-                var pwd = $('#password').val();
-                if (name == "") {
-                    alert("请输入用户名！");
-                }
-                if (pwd == "") {
-                    alert("请输入密码！");
-                }
-                else {
-                    Verify(name, pwd);
-                }
-                document.getElementById('login').innerHTML = "Logout";
-            });
-        });
-
-        $('#login').click(function (e) {
-            var logval = $('#login').text();
-            if ("Login" == logval) {
-                $('#loginmodal').fadeIn();
-            }
-            if ("Logout" == logval) {
-                delAllCookie();//删除所有cookie变量
-                alert("你已退出登录！");
-                window.location.reload();
-            }
-        });
-        $('#Close_Login').click(function () {
-            $('#loginmodal').fadeOut();
-        });
-
-
-</script>
     <script type="text/javascript">
         /******************全局变量************************/
         //=================================================
@@ -2993,24 +2847,7 @@
             });
             $("#pt_img").mouseleave(function () {//点位信息的序列图隐藏
                 $("#pt_img_show").hide();
-            });
-            
-            //数据管理
-            $("#Datamanagement").click(function () {
-                var name = document.cookie.split(';')[0].split('=')[1];
-                var flag = 0;
-                var mark = 0;
-                VerifyCookie(name, flag, mark);
-            });
-
-            //用户管理
-            $("#Adminmanagement").click(function () {
-                var name = document.cookie.split(';')[0].split('=')[1];
-                var flag = 1;
-                var mark = 0;
-                VerifyCookie(name, flag, mark);
-            });
-            
+            });           
         });
     </script>
 
