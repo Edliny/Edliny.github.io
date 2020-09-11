@@ -631,7 +631,7 @@
         </div>
 
         <div id="gpsexpand" class="modal" tabindex="-1"  style="width:360px;z-index:999;position:fixed; display: none;top: 330px;left:390px;opacity: 1;margin-left: -379px;margin-top: -273.5px">
-            <div class="modal-header">
+            <div class="modal-SHeader">
                 <button id="CloseGPS" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">GPS Search</h4>
             </div>
@@ -639,15 +639,15 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6" style="width: 100%;font-size:smaller;">
-                        <p><input id="sitetext" style="border-radius: 20px;" class="form-control" type="text"/>
+                        <p class="modal-Sp"><input id="sitetext" style="border-radius: 20px;" class="form-control" type="text"/>
                             <img id="Search_GPS_PTSearch" src="image/icon_search.png" width="20" style="z-index: 999;position: absolute;top: 2%;left: 87%;"/>
                         <hr /> 
                         </p>
                                             
-                        <p><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Project</label>
+                        <p class="modal-Sp"><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Project</label>
                             <select id="search_gps_projectselect" class="form-control" style="width:80%;" multiple="multiple"></select>
                         </p>
-                        <p><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Province</label>
+                        <p class="modal-Sp"><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Province</label>
                             <select id="search_gps_provinceselect" class="form-control" style="width:80%;height:35px;" multiple="multiple">
                                 <optgroup label="Province">
                                     <option id="gps_provinceselect_all" value="选择全部">选择全部</option>
@@ -688,20 +688,20 @@
                                 </optgroup>
                             </select>
                         </p>
-                        <p><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Mode</label>
+                        <p class="modal-Sp"><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Mode</label>
                             <select id="search_gps_modeselect" class="form-control" style="width:80%;">
                                 <option>All</option>
                                 <option>campain</option>
                                 <option selected="selected">continuous</option>
                             </select>
                         </p>
-                        <p><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Style</label>
+                        <p class="modal-Sp"><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Style</label>
                             <select id="search_gps_styleselect" class="form-control" style="width:80%;">
                                 <option selected="selected">point</option>
                                 <option>velocity</option>
                             </select>         
                         </p> 
-                        <p><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Date</label>          
+                        <p class="modal-Sp"><label style="width:20%;float: left;border:0px;border-color:white;text-align: center;">Date</label>          
                             <input type="text" id="date" class="form-control" style="width: 80%;" placeholder="Please choose date..." />
                         </p>
                     </div>
